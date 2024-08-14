@@ -1,106 +1,510 @@
-<layout-row id="RowLayout1">
-	<layout-column id="ColumnLayout1" style="align-items:stretch">
-		<stacked-view id="SV_Login">
-			<stacked-pane id="SP_LoginOK" value="true">
-				<layout-column id="Column_PersistentData"
-					class="myCustomFrame_CSK_Module_RecipeManager"
-					style="align-items: stretch">
-					<layout-row id="RowLayout4"
-						style="justify-content: space-between; align-items: center">
-						<layout-column id="ColumnLayout5" style="align-items: stretch">
-							<davinci-value-display id="VD_ParameterName" value="Parameter name:"
-								title="Name of the parameters within the CSK_PersistentData module to be uses for this module.">
-							</davinci-value-display>
-						</layout-column>
-						<layout-column id="ColumnLayout6" style="align-items: stretch">
-							<davinci-text-field id="TF_ParameterName" type="text"
-								title="Name of the parameters within the CSK_PersistentData module to be uses for this module.">
-								<crown-edpws-binding property="value"
-									name="CSK_RecipeManager/OnNewParameterName" update-on-resume>
-								</crown-edpws-binding>
-								<crown-binding event="change" name="CSK_RecipeManager/setParameterName"
-									path="param/args/name" auto-commit>
-								</crown-binding>
-								<crown-edpws-binding property="disabled"
-									name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
-									update-on-resume converter="function(value) {return !value;}">
-								</crown-edpws-binding>
-							</davinci-text-field>
-						</layout-column>
-					</layout-row>
-					<layout-row id="RowLayout2"
-						style="justify-content: space-between; align-items: center">
-						<davinci-value-display id="VD_LoadConfig"
-							value="Load config on app start:"
-							title="Load configured parameters from CSK_PersistentData on app start.">
-						</davinci-value-display>
-						<davinci-checkbox id="CB_LoadConfig"
-							title="Load configured parameters from CSK_PersistentData on app start.">
-							<span></span>
-							<crown-edpws-binding property="checked"
-								name="CSK_RecipeManager/OnNewStatusLoadParameterOnReboot"
-								update-on-resume>
-							</crown-edpws-binding>
-							<crown-edpws-binding property="disabled"
-								name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
-								update-on-resume converter="function(value) {return !value;}">
-							</crown-edpws-binding>
-							<crown-binding event="change" name="CSK_RecipeManager/setLoadOnReboot"
-								path="param/args/status" auto-commit>
-							</crown-binding>
-						</davinci-checkbox>
-					</layout-row>
-					<layout-row id="RowLayout3">
-						<layout-column id="ColumnLayout3" style="align-items: stretch">
-							<davinci-button id="B_LoadConfig" type="primary"
-								icon-position="append"
-								title="Load configured parameters from CSK_PersistentData module.">
-								<span>Load Config</span>
-								<crown-binding event="submit" name="CSK_RecipeManager/loadParameters"
-									auto-commit>
-								</crown-binding>
-								<crown-edpws-binding property="disabled"
-									name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
-									update-on-resume converter="function(value) {return !value;}">
-								</crown-edpws-binding>
-							</davinci-button>
-						</layout-column>
-						<layout-column id="ColumnLayout4" style="align-items: stretch">
-							<davinci-button id="B_SaveConfig" type="primary"
-								icon-position="append"
-								title="Save current configured parameters of this module within CSK_PersistentData module.">
-								<span>Save Config</span>
-								<crown-binding event="submit" name="CSK_RecipeManager/sendParameters"
-									auto-commit>
-								</crown-binding>
-								<crown-edpws-binding property="disabled"
-									name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
-									update-on-resume converter="function(value) {return !value;}">
-								</crown-edpws-binding>
-							</davinci-button>
-						</layout-column>
-					</layout-row>
-				</layout-column>
-			</stacked-pane>
-			<stacked-pane id="SP_LoginNotOK" value="false">
-				<davinci-callout id="Callout1" type="info">
-					<span>
-						Please log in via CSK_UserManagement module (at least via user level "Operator")
-					</span>
-				</davinci-callout>
-			</stacked-pane>
-			<crown-edpws-binding property="value"
-				name="CSK_RecipeManager/OnUserLevelOperatorActive" update-on-resume
-				converter="function(value) {return value.toString();}">
-			</crown-edpws-binding>
-		</stacked-view>
-		<stacked-view id="SV_PageCalled">
-			<crown-binding property="value" name="CSK_RecipeManager/pageCalled"
-				path="result/data/empty" auto-update="0" update-on-resume>
-			</crown-binding>
-		</stacked-view>
-	</layout-column>
-	<layout-column id="ColumnLayout2" style="flex-grow:3">
-	</layout-column>
-  
+<layout-row id="RowLayout1" class="myCustomBackground_CSK_Module_RecipeManager">
+    <layout-column id="ColumnLayout1" class="myCustomFrameNoColor_CSK_Module_RecipeManager"
+        style="align-items: stretch">
+        <layout-row id="RowLayout5" class="myCustomSpacerVert20_CSK_Module_RecipeManager">
+        </layout-row>
+        <layout-row id="RowLayout6">
+            <layout-column id="ColumnLayout2" style="align-items: stretch">
+                <layout-row id="RowLayout7" style="align-items: baseline">
+                    <davinci-value-display id="VD_Title" class="myCustomLabel_CSK_Module_RecipeManager"
+                        value="Recipe Manager">
+                    </davinci-value-display>
+                    <davinci-value-display id="VD_Version">
+                        <crown-edpws-binding property="value" name="CSK_RecipeManager/OnNewStatusModuleVersion"
+                            update-on-resume>
+                        </crown-edpws-binding>
+                    </davinci-value-display>
+                </layout-row>
+            </layout-column>
+        </layout-row>
+        <stacked-view id="SV_FeatureSupport">
+            <stacked-pane id="SP_Supported" value="true">
+                <stacked-view id="SV_Login">
+                    <stacked-pane id="SP_LoginOK" value="true">
+                        <layout-row id="RowLayout15">
+                            <layout-column id="ColumnLayout20" style="align-items: stretch">
+                                <layout-row id="RowLayout30" class="myCustomMarginFirstRow_CSK_Module_RecipeManager">
+                                    <layout-column id="ColumnLayout36" style="align-items: stretch">
+                                    </layout-column>
+                                    <layout-column id="ColumnLayout37"
+                                        class="myCustomBorderLeft_CSK_Module_RecipeManager"
+                                        style="align-items: stretch">
+                                        <layout-row id="RowLayout46" style="align-items: baseline">
+                                            <layout-column id="ColumnLayout81" style="align-items: stretch">
+                                                <layout-row id="RowLayout241" style="align-items: center">
+                                                    <layout-column id="ColumnLayout57" style="align-items: stretch">
+                                                        <davinci-value-display id="VD_PersistentDatax"
+                                                            value="Persistent Data">
+                                                        </davinci-value-display>
+                                                    </layout-column>
+                                                    <layout-column id="ColumnLayout73"
+                                                        style="align-items: stretch; flex-grow: 2">
+                                                        <davinci-text-field id="TF_ParameterName" type="text"
+                                                            title="Name of the parameters within the CSK_PersistentData module to be uses for this module.">
+                                                            <crown-edpws-binding property="value"
+                                                                name="CSK_RecipeManager/OnNewParameterName"
+                                                                update-on-resume>
+                                                            </crown-edpws-binding>
+                                                            <crown-binding event="change"
+                                                                name="CSK_RecipeManager/setParameterName"
+                                                                path="param/args/name" auto-commit>
+                                                            </crown-binding>
+                                                            <crown-edpws-binding property="disabled"
+                                                                name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
+                                                                update-on-resume
+                                                                converter="function(value) {return !value;}">
+                                                            </crown-edpws-binding>
+                                                        </davinci-text-field>
+                                                    </layout-column>
+                                                    <layout-column id="Column_PersistentDatax"
+                                                        style="align-items: stretch">
+                                                        <layout-row id="RowLayout55">
+                                                            <layout-column id="ColumnLayout76"
+                                                                style="align-items: stretch">
+                                                                <layout-row id="RowLayout34"
+                                                                    class="myCustomMarginTop7PX_CSK_Module_RecipeManager"
+                                                                    style="justify-content: center; align-items: center">
+                                                                    <davinci-button id="B_LoadConfig"
+                                                                        class="myCustomButton_CSK_Module_RecipeManager"
+                                                                        type="outline" icon-position="append"
+                                                                        title="Load configured parameters from CSK_PersistentData module."
+                                                                        icon="action/history">
+                                                                        <span></span>
+                                                                        <crown-binding event="submit"
+                                                                            name="CSK_RecipeManager/loadParameters"
+                                                                            auto-commit>
+                                                                        </crown-binding>
+                                                                        <crown-edpws-binding property="disabled"
+                                                                            name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
+                                                                            update-on-resume
+                                                                            converter="function(value) {return !value;}">
+                                                                        </crown-edpws-binding>
+                                                                    </davinci-button>
+                                                                    <davinci-button id="B_SaveConfig"
+                                                                        class="myCustomButton_CSK_Module_RecipeManager"
+                                                                        type="outline" icon-position="append"
+                                                                        title="Save current configured parameters of this module within CSK_PersistentData module."
+                                                                        icon="content/save">
+                                                                        <span></span>
+                                                                        <crown-binding event="submit"
+                                                                            name="CSK_RecipeManager/sendParameters"
+                                                                            auto-commit>
+                                                                        </crown-binding>
+                                                                        <crown-edpws-binding property="disabled"
+                                                                            name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
+                                                                            update-on-resume
+                                                                            converter="function(value) {return !value;}">
+                                                                        </crown-edpws-binding>
+                                                                    </davinci-button>
+                                                                </layout-row>
+                                                            </layout-column>
+                                                        </layout-row>
+                                                    </layout-column>
+                                                </layout-row>
+                                                <layout-row id="RowLayout57" style="align-items: center">
+                                                    <layout-column id="ColumnLayout511" style="align-items: stretch">
+                                                        <davinci-collapse id="Collapse_PersistentData"
+                                                            class="myCustomPersistentDataMargin_CSK_Module_RecipeManager"
+                                                            collapsed-title="..." expanded-title="...">
+                                                            <layout-row id="RowLayout45"
+                                                                class="myCustomPersistentDataMarginBack_CSK_Module_RecipeManager"
+                                                                style="align-items: center">
+                                                                <layout-column id="ColumnLayout6x"
+                                                                    style="align-items: stretch">
+                                                                    <layout-row id="RowLayout19"
+                                                                        style="align-items: center">
+                                                                        <davinci-value-display id="VD_StartRecipe"
+                                                                            value="Start recipe:"
+                                                                            title="Set active if selected recipe should be loaded directly after persistent data was loaded.">
+                                                                        </davinci-value-display>
+                                                                        <davinci-checkbox id="CD_LoadRecipe"
+                                                                            title="Set active if selected recipe should be loaded directly after persistent data was loaded.">
+                                                                            <span></span>
+                                                                            <crown-binding event="change"
+                                                                                name="CSK_RecipeManager/setLoadRecipeWithParameterLoaded"
+                                                                                path="param/args/status" auto-commit>
+                                                                            </crown-binding>
+                                                                            <crown-edpws-binding property="checked"
+                                                                                name="CSK_RecipeManager/OnNewStatusLoadSelectedRecipe"
+                                                                                update-on-resume>
+                                                                            </crown-edpws-binding>
+                                                                        </davinci-checkbox>
+                                                                    </layout-row>
+                                                                </layout-column>
+                                                                <layout-column id="ColumnLayout72"
+                                                                    style="align-items: stretch; flex-grow: 2">
+                                                                    <layout-row id="RowLayout37">
+                                                                        <layout-column id="ColumnLayout25"
+                                                                            style="align-items: stretch">
+                                                                            <layout-row id="RowLayout2x"
+                                                                                style="align-items: center">
+                                                                                <davinci-value-display
+                                                                                    id="VD_LoadConfig"
+                                                                                    value="Load on reboot:"
+                                                                                    title="Load configured parameters from CSK_PersistentData on app start.">
+                                                                                </davinci-value-display>
+                                                                                <davinci-checkbox id="CB_LoadConfig"
+                                                                                    title="Load configured parameters from CSK_PersistentData on app start.">
+                                                                                    <span></span>
+                                                                                    <crown-edpws-binding
+                                                                                        property="checked"
+                                                                                        name="CSK_RecipeManager/OnNewStatusLoadParameterOnReboot"
+                                                                                        update-on-resume>
+                                                                                    </crown-edpws-binding>
+                                                                                    <crown-edpws-binding
+                                                                                        property="disabled"
+                                                                                        name="CSK_RecipeManager/OnPersistentDataModuleAvailable"
+                                                                                        update-on-resume
+                                                                                        converter="function(value) {return !value;}">
+                                                                                    </crown-edpws-binding>
+                                                                                    <crown-binding event="change"
+                                                                                        name="CSK_RecipeManager/setLoadOnReboot"
+                                                                                        path="param/args/status"
+                                                                                        auto-commit>
+                                                                                    </crown-binding>
+                                                                                </davinci-checkbox>
+                                                                            </layout-row>
+                                                                        </layout-column>
+                                                                        <layout-column id="ColumnLayout77"
+                                                                            style="align-items: stretch">
+                                                                            <layout-row id="RowLayout56"
+                                                                                style="align-items: center; justify-content: flex-end">
+                                                                                <davinci-value-display
+                                                                                    id="VD_FLowConfigPrio"
+                                                                                    value="Flow config priority:"
+                                                                                    title="FlowConfig priority for FlowConfig relevant configurations.">
+                                                                                </davinci-value-display>
+                                                                                <davinci-checkbox id="CB_FlowConfigPrio"
+                                                                                    title="FlowConfig priority for FlowConfig relevant configurations.">
+                                                                                    <span></span>
+                                                                                    <crown-edpws-binding
+                                                                                        property="checked"
+                                                                                        name="CSK_RecipeManager/OnNewStatusFlowConfigPriority"
+                                                                                        update-on-resume>
+                                                                                    </crown-edpws-binding>
+                                                                                    <crown-binding event="change"
+                                                                                        name="CSK_RecipeManager/setFlowConfigPriority"
+                                                                                        path="param/args/status"
+                                                                                        auto-commit>
+                                                                                    </crown-binding>
+                                                                                </davinci-checkbox>
+                                                                            </layout-row>
+                                                                        </layout-column>
+                                                                    </layout-row>
+                                                                </layout-column>
+                                                                <layout-column id="ColumnLayout79"
+                                                                    style="align-items: stretch">
+                                                                </layout-column>
+                                                            </layout-row>
+                                                        </davinci-collapse>
+                                                    </layout-column>
+                                                </layout-row>
+                                            </layout-column>
+                                        </layout-row>
+                                    </layout-column>
+                                </layout-row>
+                                <layout-row id="RowLayout60" class="myCustomSpacerVert10_CSK_Module_RecipeManager"
+                                    style="flex-grow: 0; flex-shrink: 0">
+                                </layout-row>
+                                <layout-row id="RowLayout47" class="myCustomBorderBottom_CSK_Module_RecipeManager"
+                                    style="flex-grow: 0; flex-shrink: 0">
+                                </layout-row>
+                                <layout-row id="RowLayout61" class="myCustomSpacerVert20_CSK_Module_RecipeManager"
+                                    style="flex-grow: 0; flex-shrink: 0">
+                                </layout-row>
+                                <layout-row id="RowLayout8">
+                                    <layout-column id="ColumnLayout7" style="align-items: stretch">
+                                        <layout-row id="RowLayout18">
+                                            <layout-column id="ColumnLayout4" style="align-items: stretch">
+                                                <davinci-text-field id="TF_RegisteredEvent" type="text"
+                                                    label="Registered Event"
+                                                    title="Event to get info what recipe should be loaded."
+                                                    placeholder="e.g. CSK_Module_OnNewTrigger">
+                                                    <crown-edpws-binding property="value"
+                                                        name="CSK_RecipeManager/OnNewStatusRegisteredEvent"
+                                                        update-on-resume>
+                                                    </crown-edpws-binding>
+                                                    <crown-binding event="change"
+                                                        name="CSK_RecipeManager/setRegisteredEvent"
+                                                        path="param/args/event" auto-commit>
+                                                    </crown-binding>
+                                                </davinci-text-field>
+                                            </layout-column>
+                                            <layout-column id="ColumnLayout21" style="align-items: stretch">
+                                                <davinci-drop-down id="DD_RecipeSelection" class="convertToList"
+                                                    label="Recipe Selection">
+                                                    <crown-edpws-binding property="data"
+                                                        name="CSK_RecipeManager/OnNewStatusRecipeList" update-on-resume
+                                                        converter="convertToList">
+                                                    </crown-edpws-binding>
+                                                    <crown-edpws-binding property="value"
+                                                        name="CSK_RecipeManager/OnNewStatusSelectedRecipe"
+                                                        update-on-resume>
+                                                    </crown-edpws-binding>
+                                                    <crown-binding event="change" name="CSK_RecipeManager/selectRecipe"
+                                                        path="param/args/name" auto-commit>
+                                                    </crown-binding>
+                                                </davinci-drop-down>
+                                            </layout-column>
+                                        </layout-row>
+                                        <layout-row id="RowLayout9" style="align-items: center">
+                                            <layout-column id="ColumnLayout9" style="align-items: stretch">
+                                                <davinci-text-field id="TF_RecipeName" type="text" label="Recipe Name">
+                                                    <crown-edpws-binding property="value"
+                                                        name="CSK_RecipeManager/OnNewStatusRecipeName" update-on-resume>
+                                                    </crown-edpws-binding>
+                                                    <crown-binding event="change" name="CSK_RecipeManager/setRecipeName"
+                                                        path="param/args/name" auto-commit>
+                                                    </crown-binding>
+                                                </davinci-text-field>
+                                            </layout-column>
+                                            <layout-column id="ColumnLayout11" style="align-items: stretch">
+                                                <layout-row id="RowLayout10"
+                                                    style="justify-content: flex-end; align-items: center">
+                                                    <davinci-button id="Button_AddRecipe"
+                                                        class="myCustomButton_CSK_Module_RecipeManager" type="outline"
+                                                        icon-position="append" icon="content/add" title="Add recipe">
+                                                        <span></span>
+                                                        <crown-binding event="submit"
+                                                            name="CSK_RecipeManager/addRecipeViaUI" auto-commit>
+                                                        </crown-binding>
+                                                    </davinci-button>
+                                                    <davinci-button id="Button_RemoveRecipe"
+                                                        class="myCustomButton_CSK_Module_RecipeManager" type="outline"
+                                                        icon-position="append" icon="action/delete"
+                                                        title="Delete recipe">
+                                                        <span></span>
+                                                        <crown-binding event="submit"
+                                                            name="CSK_RecipeManager/deleteRecipeViaUI" auto-commit>
+                                                        </crown-binding>
+                                                    </davinci-button>
+                                                </layout-row>
+                                            </layout-column>
+                                        </layout-row>
+                                        <layout-row id="RowLayout4"
+                                            class="myCustomBorderBottom_CSK_Module_RecipeManager">
+                                        </layout-row>
+                                        <layout-row id="RowLayout16"
+                                            class="myCustomSpacerVert20_CSK_Module_RecipeManager">
+                                        </layout-row>
+                                        <stacked-view id="SV_RecipeSelected">
+                                            <stacked-pane id="SP_RecipeSelected" value="true">
+                                                <layout-row id="RowLayout2">
+                                                    <layout-column id="ColumnLayout3"
+                                                        class="myCustomFrame_CSK_Module_RecipeManager"
+                                                        style="align-items: stretch">
+                                                        <davinci-value-display id="VD_RecipeDetails"
+                                                            class="myCustomFrameLabel_CSK_Module_RecipeManager"
+                                                            label="Recipe Details" style="align-self: flex-start">
+                                                        </davinci-value-display>
+                                                        <layout-row id="RowLayout13">
+                                                            <layout-column id="ColumnLayout16"
+                                                                style="align-items: stretch">
+                                                                <davinci-value-display id="VD_ModuleName"
+                                                                    value="Module Name">
+                                                                </davinci-value-display>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout19"
+                                                                style="align-items: stretch">
+                                                                <davinci-value-display id="VD_InstanceID"
+                                                                    value="Instance">
+                                                                </davinci-value-display>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout18"
+                                                                style="align-items: stretch">
+                                                                <davinci-value-display id="VD_ModuleParameterName"
+                                                                    value="Parameter Name">
+                                                                </davinci-value-display>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout17"
+                                                                style="align-items: stretch">
+                                                            </layout-column>
+                                                        </layout-row>
+                                                        <layout-row id="RowLayout11">
+                                                            <layout-column id="ColumnLayout12"
+                                                                style="align-items: stretch">
+                                                                <davinci-text-field id="TF_ModuleName" type="text">
+                                                                    <crown-edpws-binding property="value"
+                                                                        name="CSK_RecipeManager/OnNewStatusRecipeModuleName"
+                                                                        update-on-resume>
+                                                                    </crown-edpws-binding>
+                                                                    <crown-binding event="change"
+                                                                        name="CSK_RecipeManager/setRecipeModuleName"
+                                                                        path="param/args/name" auto-commit>
+                                                                    </crown-binding>
+                                                                </davinci-text-field>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout15"
+                                                                style="align-items: stretch">
+                                                                <davinci-numeric-field id="NF_Instance" type="outline"
+                                                                    min="0" max="100" ticks="1" group-separator=","
+                                                                    decimal-separator="." format-pattern="0">
+                                                                    <crown-edpws-binding property="value"
+                                                                        name="CSK_RecipeManager/OnNewStatusRecipeInstanceID"
+                                                                        update-on-resume>
+                                                                    </crown-edpws-binding>
+                                                                    <crown-binding event="change"
+                                                                        name="CSK_RecipeManager/setRecipeInstance"
+                                                                        path="param/args/instanceNo" auto-commit>
+                                                                    </crown-binding>
+                                                                </davinci-numeric-field>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout14"
+                                                                style="align-items: stretch">
+                                                                <davinci-text-field id="TF_Parameter" type="text">
+                                                                    <crown-edpws-binding property="value"
+                                                                        name="CSK_RecipeManager/OnNewStatusRecipeParameterName"
+                                                                        update-on-resume>
+                                                                    </crown-edpws-binding>
+                                                                    <crown-binding event="change"
+                                                                        name="CSK_RecipeManager/setRecipeParameterName"
+                                                                        path="param/args/name" auto-commit>
+                                                                    </crown-binding>
+                                                                </davinci-text-field>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout13"
+                                                                style="align-items: stretch">
+                                                                <layout-row id="RowLayout12"
+                                                                    style="justify-content: flex-end">
+                                                                    <davinci-button id="Button_AddEditRow"
+                                                                        class="myCustomButton_CSK_Module_RecipeManager"
+                                                                        type="outline" icon-position="append"
+                                                                        title="Add/Edit" icon="content/create">
+                                                                        <span></span>
+                                                                        <crown-binding event="submit"
+                                                                            name="CSK_RecipeManager/updateRecipeConfig"
+                                                                            auto-commit>
+                                                                        </crown-binding>
+                                                                    </davinci-button>
+                                                                    <davinci-button id="Button_RemoveRow"
+                                                                        class="myCustomButton_CSK_Module_RecipeManager"
+                                                                        type="outline" icon-position="append"
+                                                                        title="Remove selected row of recipe."
+                                                                        icon="action/delete">
+                                                                        <span></span>
+                                                                        <crown-binding event="submit"
+                                                                            name="CSK_RecipeManager/deleteRecipeOrderIDViaUI"
+                                                                            auto-commit>
+                                                                        </crown-binding>
+                                                                    </davinci-button>
+                                                                </layout-row>
+                                                            </layout-column>
+                                                        </layout-row>
+                                                        <curie-table id="DT_RecipeInfo" selectable>
+                                                            <curie-table-column id="DTC_ID" header="Order">
+                                                            </curie-table-column>
+                                                            <curie-table-column id="DTC_Module" header="Module">
+                                                            </curie-table-column>
+                                                            <curie-table-column id="DTC_Instance" header="Instance">
+                                                            </curie-table-column>
+                                                            <curie-table-column id="DTC_Parameter" header="Parameter">
+                                                            </curie-table-column>
+                                                            <crown-edpws-binding property="data"
+                                                                name="CSK_RecipeManager/OnNewStatusRecipeTable"
+                                                                update-on-resume>
+                                                            </crown-edpws-binding>
+                                                            <crown-binding event="row-selected"
+                                                                name="CSK_RecipeManager/selectTableRowInUI"
+                                                                path="param/args/selection" auto-commit>
+                                                            </crown-binding>
+                                                        </curie-table>
+                                                        <layout-row id="RowLayout3">
+                                                            <layout-column id="ColumnLayout6"
+                                                                style="align-items: stretch">
+                                                                <layout-row id="RowLayout14">
+                                                                    <davinci-button id="Button_SortUp"
+                                                                        class="myCustomButton_CSK_Module_RecipeManager"
+                                                                        type="outline" icon-position="append"
+                                                                        icon="navigation/arrow_upward"
+                                                                        title="Set up in order">
+                                                                        <span></span>
+                                                                        <crown-binding event="submit"
+                                                                            name="CSK_RecipeManager/moveTableRowUp"
+                                                                            auto-commit>
+                                                                        </crown-binding>
+                                                                    </davinci-button>
+                                                                    <davinci-button id="Button_SortDown"
+                                                                        class="myCustomButton_CSK_Module_RecipeManager"
+                                                                        type="outline" icon-position="append"
+                                                                        icon="navigation/arrow_downward"
+                                                                        title="Set down in order">
+                                                                        <span></span>
+                                                                        <crown-binding event="submit"
+                                                                            name="CSK_RecipeManager/moveTableRowDown"
+                                                                            auto-commit>
+                                                                        </crown-binding>
+                                                                    </davinci-button>
+                                                                </layout-row>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout5"
+                                                                style="align-items: stretch; flex-grow: 3">
+                                                                <layout-row id="RowLayout17"
+                                                                    style="justify-content: flex-end">
+                                                                    <davinci-button id="Button_LoadRecipe"
+                                                                        class="myCustomButton_CSK_Module_RecipeManager"
+                                                                        type="primary" icon-position="append"
+                                                                        title="Load recipe for all configured modules."
+                                                                        icon="navigation/check">
+                                                                        <span></span>
+                                                                        <crown-binding event="submit"
+                                                                            name="CSK_RecipeManager/loadRecipeViaUI"
+                                                                            auto-commit>
+                                                                        </crown-binding>
+                                                                    </davinci-button>
+                                                                </layout-row>
+                                                            </layout-column>
+                                                        </layout-row>
+                                                    </layout-column>
+                                                </layout-row>
+                                            </stacked-pane>
+                                            <stacked-pane id="SP_NoRecipeSelected" value="false">
+                                            </stacked-pane>
+                                            <crown-edpws-binding property="value"
+                                                name="CSK_RecipeManager/OnNewStatusRecipeSelected" update-on-resume
+                                                converter="function(value) {return value.toString();}">
+                                            </crown-edpws-binding>
+                                        </stacked-view>
+                                    </layout-column>
+                                    <layout-column id="ColumnLayout8" style="align-items: stretch">
+                                    </layout-column>
+                                </layout-row>
+                            </layout-column>
+                        </layout-row>
+                    </stacked-pane>
+                    <stacked-pane id="SP_LoginNotOK" value="false">
+                        <davinci-callout id="Callout1" type="info">
+                            <span>
+        						Please log in via CSK_UserManagement module (at least via user level "Operator")
+        					</span>
+                        </davinci-callout>
+                    </stacked-pane>
+                    <crown-edpws-binding property="value" name="CSK_RecipeManager/OnUserLevelOperatorActive"
+                        update-on-resume converter="function(value) {return value.toString();}">
+                    </crown-edpws-binding>
+                </stacked-view>
+            </stacked-pane>
+            <stacked-pane id="SP_NoSupport" value="false">
+                <layout-row id="RowLayout110">
+                    <layout-column id="ColumnLayout112">
+                        <davinci-callout id="Callout31" type="warning" style="width: 99%">
+                            <span>Module is not supported on this device...</span>
+                        </davinci-callout>
+                        <img id="UI_sample" src="assets/CSK_Module_RecipeManager/UI_sample.png"
+                            alt="UI sample">
+                    </layout-column>
+                </layout-row>
+            </stacked-pane>
+            <crown-edpws-binding property="value" name="CSK_RecipeManager/OnNewStatusModuleIsActive" update-on-resume
+                converter="function(value) {return value.toString();}">
+            </crown-edpws-binding>
+        </stacked-view>
+        <stacked-view id="SV_PageCalled">
+            <crown-binding property="value" name="CSK_RecipeManager/pageCalled" path="result/data/empty" auto-update="0"
+                update-on-resume>
+            </crown-binding>
+            <crown-edpws-binding property="value" name="CSK_RecipeManager/OnNewStatusCSKStyle" update-on-resume
+                converter="changeStyle">
+            </crown-edpws-binding>
+        </stacked-view>
+    </layout-column>
 </layout-row>
