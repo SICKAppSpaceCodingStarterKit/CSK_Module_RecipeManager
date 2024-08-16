@@ -214,6 +214,19 @@
                                 </layout-row>
                                 <layout-row id="RowLayout8">
                                     <layout-column id="ColumnLayout7" style="align-items: stretch">
+										<layout-row id="RowLayout20">
+											<layout-column id="ColumnLayout10" style="align-items: stretch">
+												<curie-callout id="DC_FlowConfigInfo1" type="info"
+													value="FlowConfig priority active.">
+												<crown-edpws-binding property="hidden"
+													name="CSK_RecipeManager/OnNewStatusFlowConfigPriority"
+													update-on-resume converter="function(value) {return !value;}">
+												</crown-edpws-binding>
+												</curie-callout>
+											</layout-column>
+											<layout-column id="ColumnLayout22" style="align-items: stretch">
+											</layout-column>
+										</layout-row>
                                         <layout-row id="RowLayout18">
                                             <layout-column id="ColumnLayout4" style="align-items: stretch">
                                                 <davinci-text-field id="TF_RegisteredEvent" type="text"
@@ -228,6 +241,10 @@
                                                         name="CSK_RecipeManager/setRegisteredEvent"
                                                         path="param/args/event" auto-commit>
                                                     </crown-binding>
+												<crown-edpws-binding property="disabled"
+													name="CSK_RecipeManager/OnNewStatusFlowConfigPriority"
+													update-on-resume>
+												</crown-edpws-binding>
                                                 </davinci-text-field>
                                             </layout-column>
                                             <layout-column id="ColumnLayout21" style="align-items: stretch">

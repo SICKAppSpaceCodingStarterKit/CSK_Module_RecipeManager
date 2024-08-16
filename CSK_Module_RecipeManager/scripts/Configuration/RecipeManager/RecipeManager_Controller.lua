@@ -413,6 +413,8 @@ local function setRegisteredEvent(event)
 
   recipeManager_Model.parameters.registeredEvent = event
   Script.register(recipeManager_Model.parameters.registeredEvent, loadRecipe)
+
+  handleOnExpiredTmrRecipeManager()
 end
 Script.serveFunction('CSK_RecipeManager.setRegisteredEvent', setRegisteredEvent)
 
