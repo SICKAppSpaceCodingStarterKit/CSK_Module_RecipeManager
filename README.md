@@ -22,6 +22,12 @@ It is programmed in an object oriented way. Some of the modules use kind of "cla
 In general it is not neccessary to code this way, but the architecture of this app can serve as a sample to be used especially for bigger projects and to make it easier to share code.  
 Please check the [documentation](https://github.com/SICKAppSpaceCodingStarterKit/.github/blob/main/docu/SICKAppSpaceCodingStarterKit_Documentation.md) of CSK for further information.  
 
+### Dependencies
+
+|Module|Version|Remark
+|--|--|--|
+|CSK_Module_PersistentData|[>=V4.1.0](https://github.com/SICKAppSpaceCodingStarterKit/CSK_Module_PersistentData)|Necessary to load paramters defined by recipe
+
 ## Topics
 
 Coding Starter Kit, CSK, Module, SICK-AppSpace, Recipe, Parameters, Load
