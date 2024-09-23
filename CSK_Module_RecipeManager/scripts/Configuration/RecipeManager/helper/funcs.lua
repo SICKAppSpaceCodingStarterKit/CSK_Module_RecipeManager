@@ -17,6 +17,35 @@ funcs.json = require('Configuration/RecipeManager/helper/Json')
 --**********************Start Function Scope *******************************
 --**************************************************************************
 
+--- Function to create a json string out of recipe table content
+---@param recipeContent string[] Table with linked events for expression parameters
+---@param selectedRow int Currently selected row
+---@return string jsonstring JSON string
+local function createJsonRecipeList(recipeContent, selectedRow)
+
+  local list = {}
+  if recipeContent == nil then
+    list = {{DTC_ID = '-', DTC_Module = '-', DTC_Instance = '-', DTC_Parameter = '-'},}
+  else
+
+    for key, value in ipairs(recipeContent) do
+      local isSelected = false
+      if key == selectedRow then
+        isSelected = true
+      end
+      table.insert(list, {DTC_ID = tostring(key), DTC_Module = recipeContent[key]['moduleName'], DTC_Instance = tostring(recipeContent[key]['instanceNo']), DTC_Parameter = recipeContent[key]['parameterName'], selected = isSelected})
+    end
+
+    if #list == 0 then
+      list = {{DTC_ID = '-', DTC_Module = '-', DTC_Instance = '-', DTC_Parameter = '-'},}
+    end
+  end
+
+  local jsonstring = funcs.json.encode(list)
+  return jsonstring
+end
+funcs.createJsonRecipeList = createJsonRecipeList
+
 --- Function to create a list with numbers
 ---@param size int Size of the list
 ---@return string list List of numbers

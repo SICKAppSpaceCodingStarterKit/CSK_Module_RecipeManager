@@ -29,7 +29,7 @@
 -- If app property "LuaLoadAllEngineAPI" is FALSE, use this to load and check for required APIs
 -- This can improve performance of garbage collection
 
---_G.availableAPIs = require('Configuration/RecipeManager/helper/checkAPIs') -- can be used to adjust function scope of the module related on available APIs of the device
+_G.availableAPIs = require('Configuration/RecipeManager/helper/checkAPIs') -- can be used to adjust function scope of the module related on available APIs of the device
 -----------------------------------------------------------
 -- Logger
 _G.logger = Log.SharedLogger.create('ModuleLogger')
@@ -43,6 +43,11 @@ _G.logHandle:applyConfig()
 -- Loading script regarding RecipeManager_Model
 -- Check this script regarding RecipeManager_Model parameters and functions
 _G.recipeManager_Model = require('Configuration/RecipeManager/RecipeManager_Model')
+require('Configuration/RecipeManager/FlowConfig/RecipeManager_FlowConfig')
+
+if _G.availableAPIs.default == false then
+  _G.logger:warning("CSK_RecipeManager: Relevant CROWN(s) not available on device. Module is not supported...")
+end
 
 --**************************************************************************
 --**********************End Global Scope ***********************************
@@ -60,19 +65,22 @@ local function main()
   --       If so, the app will trigger the "OnDataLoadedOnReboot" event if ready after loading parameters
   --
   -- Can be used e.g. like this
+
+  --[[
+  CSK_RecipeManager.addRecipe('Recipe1')
+  CSK_RecipeManager.setRecipeModuleName('CSK_FTPClient')
+  --CSK_RecipeManager.setRecipeInstance(1) -- Not needed for single instance features, but relevant for multi instance features
+  CSK_RecipeManager.setRecipeParameterName('FTPClient_Parameters_1')
+  CSK_RecipeManager.updateRecipeConfig()
+
+  CSK_RecipeManager.loadRecipe('Recipe1')
+  ]]
   ----------------------------------------------------------------------------------------
 
-  -- _G.recipeManager_Model.doSomething() -- if you want to start a function
-  -- ...
   CSK_RecipeManager.pageCalled() -- Update UI
 
 end
 Script.register("Engine.OnStarted", main)
-
---OR
-
--- Call function after persistent data was loaded
---Script.register("CSK_RecipeManager.OnDataLoadedOnReboot", main)
 
 --**************************************************************************
 --**********************End Function Scope *********************************
