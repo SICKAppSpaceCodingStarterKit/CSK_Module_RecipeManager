@@ -24,7 +24,7 @@ Please check the [documentation](https://github.com/SICKAppSpaceCodingStarterKit
 
 ### Dependencies
 
-|Module|Version|Remark
+|Module|Version|Remark|
 |--|--|--|
 |CSK_Module_PersistentData|[>=V4.1.0](https://github.com/SICKAppSpaceCodingStarterKit/CSK_Module_PersistentData)|Necessary to load paramters defined by recipe
 
