@@ -6,14 +6,27 @@
         </crown>
         <crown name="CSK_RecipeManager">
             <trait>released</trait>
-            <desc>Please fill in information regarding: What is the idea of this module and its features? +
-How to use this module in general.... like: + 
+            <desc>Module to load specific parameters for other modules. +
+This is especially helpful to configure a system related to a specific job. +
+Check UI of this module for most available features. +
 {empty} + 
-Typically the features of this module are used like this (check also main script of this module): +
-**1) Setup** +
-ToDo +
+Typically the features of this module are used like this: +
 {empty} + 
-**2) Something else...** +
+** 1) Setup a recipe** +
+1) Create a new recipe via 'addRecipe'. +
+2) Set the name of module to load a specific parameter via 'setRecipeModuleName'. +
+3) If it is a module with multiple instances, selecte the specific instance via 'setRecipeInstance'. +
+4) Set the parameter name to load for the module via 'setRecipeParameterName'. +
+5) Add the preset confiugration to the recipe via 'updateRecipeConfig'. +
+6) Repeat steps 2) - 5) to add mutliple configurations. +
+{empty} + 
+** 2) Load recipe** +
+It is possible to configure the module to load a specific recipe automatically after loading its persistent data. +
+It will save the latest selected recipe ('selectRecipe') and if you set the status via 'setLoadRecipeWithParameterLoaded' to true, it will automatically load the recipe. +
+{empty} + 
+Beside of this, it is possible to load a recipe via an external event. To do so, register to this event via 'setRegisteredEvent' (the event needs to provide the name of recipe (STRING) as first parameter). +
+
+
 </desc>
             <serves>
                 <event name="OnNewStatusLoadParameterOnReboot">
@@ -47,15 +60,69 @@ ToDo +
                     <desc>Status of Admin userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </event>
+                <event name="OnNewStatusRecipeList">
+                    <desc>Notify list of available recipes.</desc>
+                    <param desc="List of recipes" multiplicity="1" name="list" type="string"/>
+                </event>
+                <event name="OnNewStatusRecipeName">
+                    <desc>Notify name of recipe to add.</desc>
+                    <param desc="Name of recipe." multiplicity="1" name="name" type="string"/>
+                </event>
+                <event name="OnNewStatusRecipeModuleName">
+                    <desc>Notify name of module to add to recipe.</desc>
+                    <param desc="Name of module." multiplicity="1" name="name" type="string"/>
+                </event>
+                <event name="OnNewStatusRecipeParameterName">
+                    <desc>Notify name of parameter to use for module in recipe.</desc>
+                    <param desc="Name of parameter" multiplicity="1" name="name" type="string"/>
+                </event>
+                <event name="OnNewStatusRecipeTable">
+                    <desc>Notify list of relevant information of recipe for UI table.</desc>
+                    <param desc="JSON list of recipe." multiplicity="1" name="list" type="string"/>
+                </event>
+                <event name="OnNewStatusSelectedRecipe">
+                    <desc>Notify name of selected recipe.</desc>
+                    <param desc="Name of selected recipe." multiplicity="1" name="name" type="string"/>
+                </event>
+                <event name="OnNewStatusRecipeInstanceID">
+                    <desc>Notify ID of module instance for recipe.</desc>
+                    <param desc="Number of instance." multiplicity="1" name="instanceID" type="int"/>
+                </event>
+                <event name="OnNewStatusCSKStyle">
+                    <desc>Notify UI style to use for CSK modules.</desc>
+                    <param desc="UI style" multiplicity="1" name="theme" type="string"/>
+                </event>
+                <event name="OnNewStatusModuleVersion">
+                    <desc>Notify version of module.</desc>
+                    <param desc="Version" multiplicity="1" name="version" type="string"/>
+                </event>
+                <event name="OnNewStatusModuleIsActive">
+                    <desc>Notify if module can be used on device.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusRecipeSelected">
+                    <desc>Notify status if a recipe is selected.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusRegisteredEvent">
+                    <desc>Notify name of event to listen for incoming triggers to load a specific recipe.</desc>
+                    <param desc="Name of event." multiplicity="1" name="eventName" type="string"/>
+                </event>
+                <event name="OnNewStatusRecipeSuccessfullyLoaded">
+                    <desc>Notify if loading parameters for all modules of recipe was succesfull.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusFlowConfigPriority">
+                    <desc>Notify if FlowConfig should have priority for FlowConfig relevant configurations.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusLoadSelectedRecipe">
+                    <desc>Notify if selected recipe should be directly loaded after parameters were loaded.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
                 <function name="setParameterName">
                     <desc>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</desc>
                     <param desc="Name of the parameter." multiplicity="1" name="name" type="string"/>
-                </function>
-                <function name="sendParameters">
-                    <desc>Send parameters to CSK_PersistentData module if possible to save them.</desc>
-                </function>
-                <function name="loadParameters">
-                    <desc>Load parameters for this module from the CSK_PersistentData module if possible and use them.</desc>
                 </function>
                 <function name="setLoadOnReboot">
                     <desc>Configure if this module should load its saved parameters at app/device boot up.</desc>
@@ -65,10 +132,156 @@ ToDo +
                     <desc>Function to register "OnResume" of the module UI (only as helper function).</desc>
                     <return desc="Empty string (only needed to simplify binding)." multiplicity="1" name="empty" type="string"/>
                 </function>
+                <function name="addRecipeViaUI">
+                    <desc>Function to add new recipe via UI.</desc>
+                </function>
+                <function name="addRecipe">
+                    <desc>Function to add new recipe.</desc>
+                    <param desc="Name of new recipe." multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="setRecipeName">
+                    <desc>Function to set name of recipe in UI to add afterwards.</desc>
+                    <param desc="Name of recipe." multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="selectRecipe">
+                    <desc>Function to select recipe.</desc>
+                    <param desc="Name of recipe." multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="updateRecipeConfig">
+                    <desc>Add new config to recipe or update existing, preselected config.</desc>
+                </function>
+                <function name="setRecipeModuleName">
+                    <desc>Function to set name of module to add / update in recipe.</desc>
+                    <param desc="Name of module." multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="setRecipeParameterName">
+                    <desc>Function to set name of parameter for module in recipe.</desc>
+                    <param desc="Name of parameter." multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="setRecipeInstance">
+                    <desc>Function to set instance no. of module to set parameter in recipe.</desc>
+                    <param desc="Number of instance." multiplicity="1" name="instanceNo" type="int"/>
+                </function>
+                <function name="selectTableRowInUI">
+                    <desc>Function to select specific row in recipe table in UI.</desc>
+                    <param desc="UI table selection content." multiplicity="1" name="selection" type="string"/>
+                </function>
+                <function name="loadRecipe">
+                    <desc>Function to load configuration in other moduels based on recipe.</desc>
+                    <param desc="Name of recipe to use." multiplicity="1" name="recipe" type="string"/>
+                    <return desc="Status if loading parameters for all modules of recipe was succesfull." multiplicity="1" name="success" type="bool"/>
+                </function>
+                <function name="loadRecipeViaUI">
+                    <desc>Function to load configuration of preselected recipe to modules.</desc>
+                </function>
+                <function name="deleteRecipe">
+                    <desc>Function to delete recipe.</desc>
+                    <param desc="Name of recipe." multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="deleteRecipeViaUI">
+                    <desc>Function to delete preselected recipe.</desc>
+                </function>
+                <function name="deleteRecipeOrderIDViaUI">
+                    <desc>Function to delete preselected config out of recipe via UI.</desc>
+                </function>
+                <function name="deleteRecipeOrderID">
+                    <desc>Function to delete order ID entry out of recipe.</desc>
+                    <param desc="Order ID of configuration within recipe." multiplicity="1" name="orderID" type="int"/>
+                </function>
+                <function name="setRegisteredEvent">
+                    <desc>Function to set event to register to receive name of recipe to load.</desc>
+                    <param desc="Name of event that provides name of recipe to load." multiplicity="1" name="event" type="string"/>
+                </function>
+                <function name="moveTableRowUp">
+                    <desc>Function to move selected row in recipe order one position higher.</desc>
+                </function>
+                <function name="moveTableRowDown">
+                    <desc>Function to move selected row in recipe order one position lower.</desc>
+                </function>
+                <function name="loadParameters">
+                    <desc>Load parameters for this module from the CSK_PersistentData module if possible and use them.</desc>
+                    <return desc="Success to load parameters." multiplicity="1" name="success" type="bool"/>
+                </function>
+                <function name="sendParameters">
+                    <desc>Send parameters to CSK_PersistentData module if possible to save them.</desc>
+                    <param desc="[Optional] Set to TRUE if the data should NOT be saved immediately after sending." multiplicity="?" name="noDataSave" type="bool"/>
+                </function>
+                <function name="setFlowConfigPriority">
+                    <desc>Function to configure if FlowConfig should have priority for FlowConfig relevant configuration.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="clearFlowConfigRelevantConfiguration">
+                    <desc>Function to clear FlowConfig relevant configurations.</desc>
+                </function>
+                <function name="getStatusModuleActive">
+                    <desc>Function to get status if module is active.</desc>
+                    <return desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="getParameters">
+                    <trait>released</trait>
+                    <desc>Function to get all parameters of the client in JSON format.</desc>
+                    <return desc="JSON string with all parameters." multiplicity="1" name="jsonParameters" type="string"/>
+                </function>
+                <function name="resetModule">
+                    <desc>Function to reset main configuration of module.</desc>
+                </function>
+                <function name="setLoadRecipeWithParameterLoaded">
+                    <desc>Function to set if selected recipe should be loaded after persistetn data parameters were loaded.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
             </serves>
         </crown>
+        <crown name="RecipeManager_FC">
+            <trait>released</trait>
+            <include>data-flow</include>
+            <include>remote</include>
+            <desc>Crown to provide CSK_FlowConfig relevant features.</desc>
+            <serves/>
+            <crown name="OnRecipeLoaded">
+                <trait>released</trait>
+                <include>data-flow</include>
+                <desc>Notify status if parameters for all modules of recipe were loaded successfully.</desc>
+                <serves>
+                    <event name="OnRecipeLoaded">
+                        <include>data-flow</include>
+                        <include>remote</include>
+                        <desc>Notify status if parameters for all modules of recipe were loaded successfully.</desc>
+                        <param desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                        <param desc="'CSK_RecipeManager.OnNewStatusRecipeSuccessfullyLoaded'&#10;&#10;Parameter:&#10;1: Status if recipe was loaded succesfully (BOOL)." multiplicity="1" name="OnRecipeLoaded" type="string"/>
+                    </event>
+                    <function name="create">
+                        <trait>released</trait>
+                        <desc>Internally used CSK_FlowConfig create function.</desc>
+                        <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                    </function>
+                    <function name="register">
+                        <trait>released</trait>
+                        <desc>Internally used CSK_FlowConfig register function.</desc>
+                        <param desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                        <param desc="Internal parameter (not used)." multiplicity="1" name="eventname" type="string"/>
+                        <param desc="Internally used callback function." multiplicity="1" name="callback" type="string"/>
+                        <return desc="Success of register process." multiplicity="1" name="success" type="bool"/>
+                    </function>
+                </serves>
+            </crown>
+            <crown name="LoadRecipe">
+                <desc>Set source to load a specific recipe.</desc>
+                <serves>
+                    <function name="create">
+                        <desc>Internally used CSK_FlowConfig create function.</desc>
+                        <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                    </function>
+                    <function name="loadRecipe">
+                        <include>data-flow</include>
+                        <desc>Set source to load a specific recipe.</desc>
+                        <param desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                        <param desc="Source to set recipe to load.&#10;&#10;Parameter:&#10;1: Event name (STRING)" multiplicity="1" name="source" type="string"/>
+                    </function>
+                </serves>
+            </crown>
+        </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">0.1.0</meta>
+        <meta key="version">1.0.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
