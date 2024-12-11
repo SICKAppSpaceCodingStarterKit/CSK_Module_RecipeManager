@@ -502,6 +502,12 @@ local function setFlowConfigPriority(status)
 end
 Script.serveFunction('CSK_RecipeManager.setFlowConfigPriority', setFlowConfigPriority)
 
+--- Function to load parameters related to status if FlowConfig module is ready
+local function tempLoadConfig()
+  local dereg = Script.deregister("CSK_FlowConfig.OnNewStatusFlowConfigReady", tempLoadConfig)
+  loadParameters()
+end
+
 --- Function to react on initial load of persistent parameters
 local function handleOnInitialDataLoaded()
 
@@ -521,7 +527,12 @@ local function handleOnInitialDataLoaded()
       end
 
       if recipeManager_Model.parameterLoadOnReboot then
-        loadParameters()
+        if CSK_FlowConfig then
+          -- If FlowConfig module is available, wait till it is ready (otherwise it is possible that modules block each other)
+          Script.register("CSK_FlowConfig.OnNewStatusFlowConfigReady", tempLoadConfig)
+        else
+          loadParameters()
+        end
       end
       Script.notifyEvent('RecipeManager_OnDataLoadedOnReboot')
     end
