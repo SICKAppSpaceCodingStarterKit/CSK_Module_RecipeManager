@@ -10,6 +10,8 @@ For further information check out the [documentation](https://raw.githack.com/SI
 
 ## Information
 
+If used together with CSK_Module_FlowConfig, please make sure to use a version >=1.1.0.
+
 Tested on  
 
 |Device|Firmware|Module version|
