@@ -6,13 +6,12 @@
         <layout-row id="RowLayout6">
             <layout-column id="ColumnLayout2" style="align-items: stretch">
                 <layout-row id="RowLayout7" style="align-items: baseline">
-                    <davinci-value-display id="VD_Title" class="myCustomLabel_CSK_Module_RecipeManager"
-                        value="Recipe Manager">
-                    </davinci-value-display>
+                    <h1 id="Heading_Title" class="myCustomLabel_CSK_Module_RecipeManager">
+                        Recipe Manager
+                    </h1>
                     <davinci-value-display id="VD_Version">
-                        <crown-edpws-binding property="value" name="CSK_RecipeManager/OnNewStatusModuleVersion"
-                            update-on-resume>
-                        </crown-edpws-binding>
+                        <crown-on property="value" crown-event="CSK_RecipeManager/OnNewStatusModuleVersion">
+                        </crown-on>
                     </davinci-value-display>
                 </layout-row>
             </layout-column>
@@ -66,9 +65,10 @@
                                                                     style="justify-content: center; align-items: center">
                                                                     <davinci-button id="B_LoadConfig"
                                                                         class="myCustomButton_CSK_Module_RecipeManager"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Load configured parameters from CSK_PersistentData module."
-                                                                        icon="action/history">
+                                                                        type="outline"
+                                                                        title="Load configured parameters from CSK_PersistentData module.">
+                                                                        <davinci-icon icon="action/history">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_RecipeManager/loadParameters"
@@ -82,9 +82,10 @@
                                                                     </davinci-button>
                                                                     <davinci-button id="B_SaveConfig"
                                                                         class="myCustomButton_CSK_Module_RecipeManager"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Save current configured parameters of this module within CSK_PersistentData module."
-                                                                        icon="content/save">
+                                                                        type="outline"
+                                                                        title="Save current configured parameters of this module within CSK_PersistentData module.">
+                                                                        <davinci-icon icon="content/save">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_RecipeManager/sendParameters"
@@ -214,19 +215,19 @@
                                 </layout-row>
                                 <layout-row id="RowLayout8">
                                     <layout-column id="ColumnLayout7" style="align-items: stretch">
-										<layout-row id="RowLayout20">
-											<layout-column id="ColumnLayout10" style="align-items: stretch">
-												<curie-callout id="DC_FlowConfigInfo1" type="info"
-													value="FlowConfig priority active.">
-												<crown-edpws-binding property="hidden"
-													name="CSK_RecipeManager/OnNewStatusFlowConfigPriority"
-													update-on-resume converter="function(value) {return !value;}">
-												</crown-edpws-binding>
-												</curie-callout>
-											</layout-column>
-											<layout-column id="ColumnLayout22" style="align-items: stretch">
-											</layout-column>
-										</layout-row>
+                                        <layout-row id="RowLayout20">
+                                            <layout-column id="ColumnLayout10" style="align-items: stretch">
+                                                <curie-callout id="DC_FlowConfigInfo1" type="info"
+                                                    value="FlowConfig priority active.">
+                                                    <crown-edpws-binding property="hidden"
+                                                        name="CSK_RecipeManager/OnNewStatusFlowConfigPriority"
+                                                        update-on-resume converter="function(value) {return !value;}">
+                                                    </crown-edpws-binding>
+                                                </curie-callout>
+                                            </layout-column>
+                                            <layout-column id="ColumnLayout22" style="align-items: stretch">
+                                            </layout-column>
+                                        </layout-row>
                                         <layout-row id="RowLayout18">
                                             <layout-column id="ColumnLayout4" style="align-items: stretch">
                                                 <davinci-text-field id="TF_RegisteredEvent" type="text"
@@ -241,10 +242,10 @@
                                                         name="CSK_RecipeManager/setRegisteredEvent"
                                                         path="param/args/event" auto-commit>
                                                     </crown-binding>
-												<crown-edpws-binding property="disabled"
-													name="CSK_RecipeManager/OnNewStatusFlowConfigPriority"
-													update-on-resume>
-												</crown-edpws-binding>
+                                                    <crown-edpws-binding property="disabled"
+                                                        name="CSK_RecipeManager/OnNewStatusFlowConfigPriority"
+                                                        update-on-resume>
+                                                    </crown-edpws-binding>
                                                 </davinci-text-field>
                                             </layout-column>
                                             <layout-column id="ColumnLayout21" style="align-items: stretch">
@@ -280,7 +281,8 @@
                                                     style="justify-content: flex-end; align-items: center">
                                                     <davinci-button id="Button_AddRecipe"
                                                         class="myCustomButton_CSK_Module_RecipeManager" type="outline"
-                                                        icon-position="append" icon="content/add" title="Add recipe">
+                                                        title="Add recipe">
+                                                        <davinci-icon icon="content/add"></davinci-icon>
                                                         <span></span>
                                                         <crown-binding event="submit"
                                                             name="CSK_RecipeManager/addRecipeViaUI" auto-commit>
@@ -288,8 +290,8 @@
                                                     </davinci-button>
                                                     <davinci-button id="Button_RemoveRecipe"
                                                         class="myCustomButton_CSK_Module_RecipeManager" type="outline"
-                                                        icon-position="append" icon="action/delete"
                                                         title="Delete recipe">
+                                                        <davinci-icon icon="action/delete"></davinci-icon>
                                                         <span></span>
                                                         <crown-binding event="submit"
                                                             name="CSK_RecipeManager/deleteRecipeViaUI" auto-commit>
@@ -385,8 +387,9 @@
                                                                     style="justify-content: flex-end">
                                                                     <davinci-button id="Button_AddEditRow"
                                                                         class="myCustomButton_CSK_Module_RecipeManager"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Add/Edit" icon="content/create">
+                                                                        type="outline" title="Add/Edit">
+                                                                        <davinci-icon icon="content/create">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_RecipeManager/updateRecipeConfig"
@@ -395,9 +398,10 @@
                                                                     </davinci-button>
                                                                     <davinci-button id="Button_RemoveRow"
                                                                         class="myCustomButton_CSK_Module_RecipeManager"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Remove selected row of recipe."
-                                                                        icon="action/delete">
+                                                                        type="outline"
+                                                                        title="Remove selected row of recipe.">
+                                                                        <davinci-icon icon="action/delete">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_RecipeManager/deleteRecipeOrderIDViaUI"
@@ -431,9 +435,9 @@
                                                                 <layout-row id="RowLayout14">
                                                                     <davinci-button id="Button_SortUp"
                                                                         class="myCustomButton_CSK_Module_RecipeManager"
-                                                                        type="outline" icon-position="append"
-                                                                        icon="navigation/arrow_upward"
-                                                                        title="Set up in order">
+                                                                        type="outline" title="Set up in order">
+                                                                        <davinci-icon icon="navigation/arrow_upward">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_RecipeManager/moveTableRowUp"
@@ -442,9 +446,9 @@
                                                                     </davinci-button>
                                                                     <davinci-button id="Button_SortDown"
                                                                         class="myCustomButton_CSK_Module_RecipeManager"
-                                                                        type="outline" icon-position="append"
-                                                                        icon="navigation/arrow_downward"
-                                                                        title="Set down in order">
+                                                                        type="outline" title="Set down in order">
+                                                                        <davinci-icon icon="navigation/arrow_downward">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_RecipeManager/moveTableRowDown"
@@ -459,9 +463,10 @@
                                                                     style="justify-content: flex-end">
                                                                     <davinci-button id="Button_LoadRecipe"
                                                                         class="myCustomButton_CSK_Module_RecipeManager"
-                                                                        type="primary" icon-position="append"
-                                                                        title="Load recipe for all configured modules."
-                                                                        icon="navigation/check">
+                                                                        type="primary"
+                                                                        title="Load recipe for all configured modules.">
+                                                                        <davinci-icon icon="navigation/check">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_RecipeManager/loadRecipeViaUI"
