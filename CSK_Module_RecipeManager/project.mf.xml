@@ -281,12 +281,12 @@ Beside of this, it is possible to load a recipe via an external event. To do so,
             </crown>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">1.0.1</meta>
+        <meta key="version">1.0.2</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
         <meta key="crown2-flow-engine">false</meta>
-        <meta key="LuaLoadAllEngineAPI">true</meta>
+        <meta key="LuaLoadAllEngineAPI">false</meta>
         <entry default="CSK_Module_RecipeManager.lua" path="scripts"/>
     </application>
 </manifest>
